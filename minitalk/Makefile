@@ -1,0 +1,48 @@
+NAME_SERVER = server
+NAME_CLIENT = client
+BONUS_SERVER = server_bonus
+BONUS_CLIENT = client_bonus
+
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
+
+SRCS_SERVER = server.c
+SRCS_CLIENT = client.c
+SRCS_SERVER_BONUS = server_bonus.c
+SRCS_CLIENT_BONUS = client_bonus.c
+
+OBJS_SERVER = $(SRCS_SERVER:.c=.o)
+OBJS_CLIENT = $(SRCS_CLIENT:.c=.o)
+OBJS_SERVER_BONUS = $(SRCS_SERVER_BONUS:.c=.o)
+OBJS_CLIENT_BONUS = $(SRCS_CLIENT_BONUS:.c=.o)
+
+all: $(NAME_SERVER) $(NAME_CLIENT)
+
+$(NAME_SERVER): $(OBJS_SERVER)
+	$(CC) $(CFLAGS) $(OBJS_SERVER) -o $(NAME_SERVER)
+
+$(NAME_CLIENT): $(OBJS_CLIENT)
+	$(CC) $(CFLAGS) $(OBJS_CLIENT) -o $(NAME_CLIENT)
+
+bonus: $(BONUS_SERVER) $(BONUS_CLIENT)
+
+$(BONUS_SERVER): $(OBJS_SERVER_BONUS)
+	$(CC) $(CFLAGS) $(OBJS_SERVER_BONUS) -o $(BONUS_SERVER)
+
+$(BONUS_CLIENT): $(OBJS_CLIENT_BONUS)
+	$(CC) $(CFLAGS) $(OBJS_CLIENT_BONUS) -o $(BONUS_CLIENT)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -f $(OBJS_SERVER) $(OBJS_CLIENT) \
+		$(OBJS_SERVER_BONUS) $(OBJS_CLIENT_BONUS)
+
+fclean: clean
+	rm -f $(NAME_SERVER) $(NAME_CLIENT) \
+		$(BONUS_SERVER) $(BONUS_CLIENT)
+
+re: fclean all
+
+.PHONY: all clean fclean re bonus
