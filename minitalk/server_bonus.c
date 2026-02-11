@@ -1,0 +1,56 @@
+#include <signal.h>
+#include <unistd.h>
+
+static void	handle_signal(int sig, siginfo_t *info, void *ctx)
+{
+	static int				bit_count = 0;
+	static unsigned char		c = 0;
+	static int				client_pid = 0;
+
+	(void)ctx;
+	if (client_pid != info->si_pid)
+		client_pid = info->si_pid;
+	if (sig == SIGUSR2)
+		c |= (1 << (7 - bit_count));
+	bit_count++;
+	if (bit_count == 8)
+	{
+		if (c == '\0')
+			kill(client_pid, SIGUSR1);
+		else
+			write(1, &c, 1);
+		bit_count = 0;
+		c = 0;
+	}
+}
+
+int	main(void)
+{
+	struct sigaction	sa;
+
+	sa.sa_sigaction = handle_signal;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = SA_SIGINFO;
+	sigaction(SIGUSR1, &sa, 0);
+	sigaction(SIGUSR2, &sa, 0);
+	write(1, "Server PID: ", 12);
+	{
+		int		pid;
+		char	buf[12];
+		int		len;
+
+		pid = getpid();
+		len = 0;
+		while (pid > 0)
+		{
+			buf[len++] = (pid % 10) + '0';
+			pid /= 10;
+		}
+		while (--len >= 0)
+			write(1, &buf[len], 1);
+		write(1, "\n", 1);
+	}
+	while (1)
+		pause();
+	return (0);
+}
