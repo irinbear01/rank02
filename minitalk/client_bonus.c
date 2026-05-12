@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khaiamsr <khaiamsr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irinbear <irinbear@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 13:57:06 by khaiamsr          #+#    #+#             */
-/*   Updated: 2026/03/02 14:03:10 by khaiamsr         ###   ########.fr       */
+/*   Updated: 2026/03/06 20:07:07 by irinbear         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
 #include <unistd.h>
 
-// static volatile sig_atomic_t	g_ack = 0; Notice: GLOBAL_VAR_DETECTED  (line:  16, col:   1):     Global variable present in file. Make sure it is a reasonable choice.
+static volatile sig_atomic_t	g_ack = 0;
 
 static int	ft_atoi(const char *s)
 {

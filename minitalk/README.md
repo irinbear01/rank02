@@ -3,31 +3,34 @@
 # Minitalk
 
 ## Description
-Minitalk is a small data exchange program using UNIX signals.  
+
+Minitalk is a small data exchange program using UNIX signals.
+
 The project consists of two executables:
+
 - **server**: prints its PID and displays messages received from clients.
-- **client**: sends a string to the server identified by its PID.
+- **client**: sends a string to the server using the server PID.
 
-Communication is done **exclusively** with **SIGUSR1** and **SIGUSR2**:
-- SIGUSR1 represents bit `0`
-- SIGUSR2 represents bit `1`
+Communication is done exclusively with two UNIX signals:
 
-The server reconstructs bytes from incoming signals and prints characters as soon as they are fully received.
+- `SIGUSR1` represents bit `0`
+- `SIGUSR2` represents bit `1`
+
+The client sends each character bit by bit.  
+The server receives the signals, reconstructs each byte, and prints the message.
 
 ## Instructions
 
-### Requirements
-- `cc` compiler
-- UNIX-like environment (Linux/macOS)
-- Norm-compliant code (42 Norm)
+### Compile mandatory part
 
-### Compile
 ```bash
 make
 
 AI Usage
 AI was used for:
-Explaining the project requirements and designing a step-by-step implementation plan.
-Reviewing the code for compliance with the allowed functions list and Norm constraints.
-Drafting this README structure according to the subject requirements.
-All code written for the project was reviewed, tested, and fully understood by the author.
+Explaining the Minitalk subject requirements.
+Reviewing the implementation logic.
+Checking whether the functions used are allowed by the subject.
+Helping draft the README structure.
+Explaining signal-based communication and bonus acknowledgement behavior.
+All generated explanations and suggestions were reviewed, tested, and understood before being included in the project.

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khaiamsr <khaiamsr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irinbear <irinbear@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 13:57:45 by khaiamsr          #+#    #+#             */
-/*   Updated: 2026/03/02 13:58:51 by khaiamsr         ###   ########.fr       */
+/*   Updated: 2026/05/02 22:48:47 by irinbear         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ static void	handle_signal(int sig)
 	bit++;
 	if (bit == 8)
 	{
-		write(1, &c, 1);
+		if (c != '\0')
+			write(1, &c, 1);
 		bit = 0;
 		c = 0;
 	}
